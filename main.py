@@ -8,8 +8,8 @@ if len(argv) < 2:
 with open(argv[1]) as f:
     points = [Point(*line.split()) for line in f]
 
-if len(points) > 1000:
-    setrecursionlimit(len(points) + 2)
+if len(points) > 500:
+    setrecursionlimit(len(points) * 2)
 
 for index in Welzl(points).sed():
     print(index)
