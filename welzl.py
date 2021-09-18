@@ -32,8 +32,11 @@ class Point:
 
 class Circle:
     def __init__(self, P: List[Point]) -> None:
-        P = self._handle(P)
+        self.valid = bool(P)
+        if not self.valid:
+            return
 
+        P = self._handle(P)
         if not P:
             self.center = Point(0, 0)
             self.radius2 = .0
@@ -85,7 +88,7 @@ class Circle:
         
 
     def contains(self, p: Point) -> bool:
-        return (self.center - p).len2() <= self.radius2
+        return self.valid and (self.center - p).len2() <= self.radius2
 
 
 class Welzl:
