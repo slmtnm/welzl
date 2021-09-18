@@ -6,9 +6,10 @@ from welzl import Circle, Point, Welzl
 from random import randint
 import sys
 
-POINTS_NUMBER = 10_000
+POINTS_NUMBER = 50
 
-sys.setrecursionlimit(2 * POINTS_NUMBER)
+if POINTS_NUMBER > 1000:
+    sys.setrecursionlimit(2 * POINTS_NUMBER)
 
 points = [Point(randint(0, 100), randint(0, 100)) for _ in range(POINTS_NUMBER)]
 
