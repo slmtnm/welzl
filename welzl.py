@@ -32,6 +32,21 @@ class Point:
 
 class Circle:
     def __init__(self, P: List[Point]) -> None:
+        '''Initialize new circle instance
+
+        Input cases are:
+        * If no points given (P is empty), then circle has invalid state.
+        * If one point given, then circle has center at that point 
+            and radius equals to 0.
+        * If two points given, then circle has center at mean of those
+            points and radius equals to half length of segment, connecting
+            those two points.
+        * If three points given, circle is circumscribed circle of triangle.
+        * If more than three points given, ValueError exception is thrown.
+
+        Arguments: P(List[Point]) - list of 0, 1, 2 or 3 points 
+            that determine circle
+        '''
         self.valid = bool(P)
         if not self.valid:
             return
@@ -65,7 +80,16 @@ class Circle:
             self.radius2 = (self.center - p1).len2()
     
     def _handle(self, P: List[Point]) -> List[Point]:
-        '''Sanitize input points by handling corner cases'''
+        '''Sanitize input points by handling corner cases
+
+        Corners cases are:
+        * given 2 points that are equal; result will be one point
+        * given 3 points, some of them are equal; result will be unique points
+        * given 3 points that lie on same line; result will be 2 extreme points
+
+        Arguments: P(List[Point]) - list of points that should be sanitized
+        Returns: (List[Point]) - sanitized list of points
+        '''
         if len(P) == 2 and P[0] == P[1]:
             # two points but they are the same
             return [P[0]]
@@ -87,6 +111,12 @@ class Circle:
         return P
 
     def contains(self, p: Point) -> bool:
+        '''Checks whether circle contains point
+
+        Arguments: p(Point) - point to check if it is in circle
+
+        Returns: (bool) - true if circle contains point, false otherwise
+        '''
         return self.valid and (self.center - p).len2() <= self.radius2
 
 class Welzl:
@@ -96,9 +126,25 @@ class Welzl:
         shuffle(self.indices)
 
     def sed(self) -> List[int]:
+        '''Evaluates smallest enclosing disk
+
+        Arguments: none
+
+        Returns: (List[int]) - point indices in input point set, 
+            given in constructor
+        '''
         return self._welzl(P=self.indices, R=[])
 
     def _welzl(self, P: List[int], R: List[int]) -> List[int]:
+        '''Recursive helper function
+
+        Arguments: 
+        * P(List[int]) - list of point indices that must be enclosed
+        * R(List[int]) - list of point indices that must lie on enclosing circle
+
+        Returns: (List[int]) - list of point indices, that determines minimal
+            enclosing circle
+        '''
         if not P or len(R) == 3:
             return R
 
