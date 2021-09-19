@@ -1,5 +1,5 @@
 from welzl import Welzl, Point
-from sys import setrecursionlimit, argv
+from sys import argv
 
 if len(argv) < 2:
     print('Usage: python3 ./main.py <file-with-points>')
@@ -7,9 +7,6 @@ if len(argv) < 2:
 
 with open(argv[1]) as f:
     points = [Point(*line.split()) for line in f]
-
-if len(points) > 500:
-    setrecursionlimit(len(points) * 2)
 
 for index in Welzl(points).sed():
     print(index)

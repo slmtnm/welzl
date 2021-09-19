@@ -85,11 +85,9 @@ class Circle:
                     s = sorted(P, key=lambda p: p.y)                    
                 return [s[0], s[2]]
         return P
-        
 
     def contains(self, p: Point) -> bool:
         return self.valid and (self.center - p).len2() <= self.radius2
-
 
 class Welzl:
     def __init__(self, points: List[Point]) -> None:
@@ -101,12 +99,11 @@ class Welzl:
         return self._welzl(P=self.indices, R=[])
 
     def _welzl(self, P: List[int], R: List[int]) -> List[int]:
-        if not P or len(R) == 3: 
+        if not P or len(R) == 3:
             return R
-        p, *rest = P
-        D = self._welzl(rest, R)
-        
-        if Circle([self.points[i] for i in D]).contains(self.points[p]):
-            return D
-        
-        return self._welzl(rest, R + [p])
+
+        result = R
+        for i, p in enumerate(P):
+            if not Circle([self.points[i] for i in result]).contains(self.points[p]):
+                result = self._welzl(P[:i], R + [p])
+        return result

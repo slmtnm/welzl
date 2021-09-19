@@ -4,12 +4,8 @@ import plotly.graph_objects as go
 
 from welzl import Circle, Point, Welzl
 from random import randint
-import sys
 
 POINTS_NUMBER = 50
-
-if POINTS_NUMBER > 1000:
-    sys.setrecursionlimit(2 * POINTS_NUMBER)
 
 points = [Point(randint(0, 100), randint(0, 100)) for _ in range(POINTS_NUMBER)]
 
